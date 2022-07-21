@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
-import dbNotes from "./db/db.json"
+import dbNotes from "./db/db.json" assert { type:'json' };
 
 
 const app = express();
@@ -32,9 +32,13 @@ app.post('/api/notes', (req, res) =>
     {const newNote = req.body;
     res.json(dbNotes);
     dbNotes.push(newNote)
-    fs.writeFile('./db/db.json', JSON.stringify(dbNotes), err =>
-    err(console.log('There was an error writing your note')), console.log('New note written!')
-    )});
+    fs.writeFile('./db/db.json', JSON.stringify(dbNotes), (err) => 
+    {if(!err)
+        {console.log('New note written');
+    } else 
+        {console.log('There was an error writing your note')
+    }
+})});
      
 
 
