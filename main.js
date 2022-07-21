@@ -1,5 +1,8 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
+import dbNotes from "./db/db.json"
+
 
 const app = express();
 const port = process.env.port || 3003
@@ -20,6 +23,20 @@ app.get('/notes', (req, res) =>
 app.get('*', (req, res) =>
     res.sendFile((__dirname + '/public/index.html'))
 );
+
+app.get('/api/notes/', (req, res) =>
+    res.json(dbNotes)
+);
+
+app.post('/api/notes', (req, res) => 
+    {const newNote = req.body;
+    res.json(dbNotes);
+    dbNotes.push(newNote)
+    fs.writeFile('./db/db.json', JSON.stringify(dbNotes), err =>
+    err(console.log('There was an error writing your note')), console.log('New note written!')
+    )});
+     
+
 
 app.listen(port, () =>
     console.log(`App listening at http://localhost:${port}`)
