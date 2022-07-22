@@ -29,7 +29,7 @@
   use npm install for both
   
   ## Usage: 
-  none
+  Heroku link: https://gab-note-taker.herokuapp.com/
 
   ## License:
   none 
