@@ -5,7 +5,7 @@ import dbNotes from "./db/db.json" assert { type:'json' };
 import uniqid from "uniqid"
 
 const app = express();
-const PORT = process.env.port || 3003
+const PORT = process.env.PORT || 3003
 const __dirname = path.resolve()
 
 app.use(express.json());
@@ -22,7 +22,7 @@ app.get('/notes', (req, res) =>
 
 // Added this line per the "getting started" instructions but it screws up the paths if active
 // app.get('*', (req, res) =>
-//     res.sendFile(__dirname, '/public/index.html')
+//     res.sendFile(path.join(__dirname, '/public/index.html'))
 // );
 
 app.get('/api/notes/', (req, res) =>
