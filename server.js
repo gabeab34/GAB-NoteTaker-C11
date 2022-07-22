@@ -5,7 +5,7 @@ import dbNotes from "./db/db.json" assert { type:'json' };
 import uniqid from "uniqid"
 
 const app = express();
-const port = process.env.port || 3003
+const PORT = process.env.port || 3003
 const __dirname = path.resolve()
 
 app.use(express.json());
@@ -20,9 +20,10 @@ app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
-app.get('*', (req, res) =>
-    res.sendFile((__dirname + '/public/index.html'))
-);
+// Added this line per the "getting started" instructions but it screws up the paths if active
+// app.get('*', (req, res) =>
+//     res.sendFile(__dirname, '/public/index.html')
+// );
 
 app.get('/api/notes/', (req, res) =>
     res.json(dbNotes)
@@ -31,18 +32,19 @@ app.get('/api/notes/', (req, res) =>
 app.post('/api/notes', (req, res) => 
     {const newNote = req.body;
     newNote['id'] = uniqid();
-    res.json(dbNotes);
-    dbNotes.push(newNote)
+    dbNotes.push(newNote);
     fs.writeFile('./db/db.json', JSON.stringify(dbNotes), err => 
     {if(!err)
         {console.log('New note written');
     } else 
         {console.log('There was an error writing your note')
     }
+    res.json(dbNotes);
 })});
+
      
 
 
-app.listen(port, () =>
-    console.log(`App listening at http://localhost:${port}`)
+app.listen(PORT, () =>
+    console.log(`App listening at http://localhost:${PORT}`)
 );
