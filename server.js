@@ -42,6 +42,18 @@ app.post('/api/notes', (req, res) =>
     res.json(dbNotes);
 })});
 
+app.delete('/api/notes/:id', (req, res) => 
+    {const del = dbNotes.find((newNote) => { newNote.id === req.params.id });
+    dbNotes.splice(del, 1);
+    fs.writeFile('./db/db.json', JSON.stringify(dbNotes), err => 
+    {if(!err)
+        {console.log('Note has been deleted');
+    } else 
+        {console.log('There was an error deleting your note')
+    }
+    res.json(dbNotes);
+})});
+
      
 
 
