@@ -25,11 +25,11 @@ app.get('/notes', (req, res) =>
 //     res.sendFile(path.join(__dirname, '/public/index.html'))
 // );
 
-app.get('/api/notes/', (req, res) =>
+app.get('./api/notes/', (req, res) =>
     res.json(dbNotes)
 );
 
-app.post('/api/notes', (req, res) => 
+app.post('./api/notes', (req, res) => 
     {const newNote = req.body;
     newNote['id'] = uniqid();
     dbNotes.push(newNote);
@@ -42,7 +42,7 @@ app.post('/api/notes', (req, res) =>
     res.json(dbNotes);
 })});
 
-app.delete('/api/notes/:id', (req, res) => 
+app.delete('./api/notes/:id', (req, res) => 
     {const del = dbNotes.find((newNote) => { newNote.id === req.params.id });
     dbNotes.splice(del, 1);
     fs.writeFile('./db/db.json', JSON.stringify(dbNotes), err => 
